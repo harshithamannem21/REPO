@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Harshitha Mannem — Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #0A0F1E;
+      --surface: #111827;
+      --border:  #1E2A42;
+      --text:    #F0EDE6;
+      --muted:   #8892A4;
+      --accent:  #00C4CC;
+      --warm:    #C8B89A;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 6vw;
+      background: rgba(10,15,30,.85);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: var(--accent);
+      letter-spacing: .04em;
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2.2rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: .85rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── SECTION SHARED ── */
+    section { padding: 7rem 6vw; }
+    .section-label {
+      font-family: 'Syne', sans-serif;
+      font-size: .72rem;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.2rem;
+    }
+
+    /* ── SECTION 1: HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-top: 7rem;
+      position: relative;
+      overflow: hidden;
+    }
+    #hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 60px 60px;
+      opacity: .3;
+      pointer-events: none;
+    }
+    #hero::after {
+      content: '';
+      position: absolute;
+      top: -200px; right: -200px;
+      width: 700px; height: 700px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,196,204,.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-content { position: relative; z-index: 1; max-width: 900px; }
+    .hero-greeting {
+      font-size: .9rem;
+      color: var(--warm);
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      opacity: 0;
+      animation: fadeUp .6s .2s forwards;
+    }
+    .hero-name {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(3.2rem, 8vw, 7rem);
+      font-weight: 800;
+      line-height: 1.0;
+      letter-spacing: -.02em;
+      background: linear-gradient(135deg, #F0EDE6 30%, #00C4CC 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      opacity: 0;
+      animation: fadeUp .7s .45s forwards;
+    }
+    .hero-name::after {
+      content: '';
+      -webkit-text-fill-color: var(--accent);
+      animation: blink 1s step-end infinite;
+      margin-left: 4px;
+    }
+    .hero-role {
+      font-size: clamp(1rem, 2.5vw, 1.4rem);
+      color: var(--muted);
+      font-weight: 300;
+      margin-top: 1.4rem;
+      opacity: 0;
+      animation: fadeUp .7s .7s forwards;
+    }
+    .hero-role span { color: var(--warm); font-weight: 500; }
+    .hero-cta {
+      margin-top: 3rem;
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp .7s .95s forwards;
+    }
+    .btn {
+      display: inline-block;
+      padding: .8rem 2rem;
+      border-radius: 4px;
+      font-family: 'Syne', sans-serif;
+      font-size: .85rem;
+      font-weight: 600;
+      letter-spacing: .06em;
+      text-decoration: none;
+      text-transform: uppercase;
+
+      transition: transform .2s, box-shadow .2s;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: var(--bg);
+      border: 2px solid var(--accent);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,196,204,.3); }
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 2px solid var(--border);
+    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ── SECTION 2: ABOUT ── */
+    #about {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+    .about-left h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 1.6rem;
+    }
+    .about-left h2 em { font-style: normal; color: var(--accent); }
+    .about-left p { color: var(--muted); font-size: .95rem; margin-bottom: 1rem; }
+    .about-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.4rem;
+      margin-top: 2.5rem;
+    }
+    .stat-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.4rem;
+    }
+    .stat-number {
+      font-family: 'Syne', sans-serif;
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: var(--accent);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: .78rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      margin-top: .4rem;
+    }
+    .about-right { padding-top: 3rem; }
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: .9rem;
+    }
+    .info-row:first-of-type { border-top: 1px solid var(--border); }
+    .info-row .label { color: var(--muted); letter-spacing: .06em; font-size: .78rem; text-transform: uppercase; }
+    .info-row .value { color: var(--text); font-weight: 500; }
+    .available-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      background: rgba(0,196,204,.1);
+      border: 1px solid rgba(0,196,204,.3);
+      color: var(--accent);
+      border-radius: 50px;
+      padding: .35rem .9rem;
+      font-size: .76rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-top: 2rem;
+    }
+    .available-badge::before {
+      content: '';
+      width: 8px; height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    /* ── SECTION 3: SKILLS ── */
+    #skills h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 700;
+      margin-bottom: 3.5rem;
+      max-width: 600px;
+    }
+    #skills h2 span { color: var(--warm); }
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.6rem;
+    }
+    .skill-group {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.8rem;
+      transition: border-color .25s, transform .25s;
+    }
+    .skill-group:hover { border-color: var(--accent); transform: translateY(-4px); }
+    .skill-group-title {
+      font-family: 'Syne', sans-serif;
+      font-size: .7rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.2rem;
+    }
+    .tags { display: flex; flex-wrap: wrap; gap: .6rem; }
+    .tag {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      border-radius: 4px;
+      padding: .35rem .8rem;
+      font-size: .8rem;
+      letter-spacing: .04em;
+      transition: background .2s, color .2s, border-color .2s;
+    }
+    .tag:hover { background: rgba(0,196,204,.1); color: var(--accent); border-color: var(--accent); }
+
+    /* ── SECTION 4: PROJECTS ── */
+    #projects {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+    }
+    #projects h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 700;
+      margin-bottom: 3.5rem;
+    }
+    #projects h2 span { color: var(--accent); }
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.8rem;
+    }
+    .project-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      transition: border-color .25s, transform .25s, box-shadow .25s;
+      position: relative;
+      overflow: hidden;
+    }
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .35s;
+    }
+    .project-card:hover { transform: translateY(-5px); box-shadow: 0 16px 40px rgba(0,0,0,.4); }
+    .project-card:hover::before { transform: scaleX(1); }
+    .project-meta { display: flex; justify-content: space-between; align-items: center; }
+    .project-year { font-size: .72rem; color: var(--muted); letter-spacing: .1em; }
+    .project-status {
+      font-size: .68rem;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      padding: .2rem .6rem;
+      border-radius: 50px;
+      border: 1px solid;
+    }
+    .status-live { color: #4ADE80; border-color: #4ADE80; background: rgba(74,222,128,.08); }
+    .status-wip  { color: var(--warm); border-color: var(--warm); background: rgba(200,184,154,.08); }
+    .project-title { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 700; line-height: 1.2; }
+    .project-desc  { color: var(--muted); font-size: .88rem; line-height: 1.65; flex: 1; }
+    .project-stack { display: flex; flex-wrap: wrap; gap: .5rem; }
+    .stack-chip {
+      font-size: .72rem;
+      color: var(--accent);
+      background: rgba(0,196,204,.08);
+      border: 1px solid rgba(0,196,204,.2);
+      border-radius: 3px;
+      padding: .2rem .6rem;
+    }
+    .project-links {
+      display: flex;
+      gap: 1rem;
+      padding-top: .5rem;
+      border-top: 1px solid var(--border);
+    }
+    .project-link {
+      font-size: .78rem;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      transition: color .2s;
+    }
+    .project-link:hover { color: var(--accent); }
+    .project-link::after { content: ' →'; }
+
+    /* ── SECTION 5: FOOTER ── */
+    footer {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      padding: 4rem 6vw 2.5rem;
+    }
+    .footer-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 3rem;
+      flex-wrap: wrap;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .footer-brand .name {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--text);
+    }
+    .footer-brand .tagline { color: var(--muted); font-size: .85rem; margin-top: .4rem; }
+    .footer-links-group h4 {
+      font-family: 'Syne', sans-serif;
+      font-size: .7rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+    .footer-links-group ul { list-style: none; display: flex; flex-direction: column; gap: .6rem; }
+    .footer-links-group a { color: var(--text); text-decoration: none; font-size: .88rem; transition: color .2s; }
+    .footer-links-group a:hover { color: var(--accent); }
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 2rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-copy { color: var(--muted); font-size: .8rem; }
+    .footer-socials { display: flex; gap: 1.2rem; }
+    .social-link {
+      width: 36px; height: 36px;
+      display: flex; align-items: center; justify-content: center;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: .7rem;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      transition: border-color .2s, color .2s, background .2s;
+    }
+    .social-link:hover { border-color: var(--accent); color: var(--accent); background: rgba(0,196,204,.06); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(0,196,204,.6); }
+      50%       { box-shadow: 0 0 0 5px rgba(0,196,204,0); }
+    }
+    @keyframes popup {
+    0% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+    60% {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .about-right { padding-top: 0; }
+      .footer-top { flex-direction: column; }
+    }
+    @media (max-width: 480px) {
+      .nav-links { display: none; }
+      .about-stats { grid-template-columns: 1fr 1fr; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#hero" class="nav-logo">AM</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#footer">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- SECTION 1 — NAME / HERO -->
+  <section id="hero">
+    <div class="hero-content">
+      <p class="hero-greeting">Hello, I'm</p>
+      <h1 class="hero-name"><span id="typing-name"></span>Harshitha Mannem</h1>
+      <p class="hero-role">
+        Aspiring Software Developer 
+        — crafting fast, thoughtful digital experiences.
+      </p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn btn-primary">View My Work</a>
+        <a href="#about"    class="btn btn-outline">Learn More</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 2 — DETAILS / ABOUT -->
+  <section id="about">
+    <div class="about-grid">
+      <div class="about-left">
+        <p class="section-label">About Me</p>
+        <h2>Building things that <em>matter</em> on the web</h2>
+        <p>
+          Aspiring Software Developer with a strong interest in Artificial Intelligence and emerging technologies. Skilled in Java programming, familiar with Python, and currently learning SQL to enhance my skills.
+        </p>
+        <p>
+          Based in Andhra Pradesh, I've worked across various certifications to enhance my skills.
+        </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-right">
+        <p class="section-label">Quick Info</p>
+        <div class="info-row">
+          <span class="label">Location</span>
+          <span class="value">Kavali, Andhra Pradesh</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Email</span>
+          <span class="value">mannemharshitha2111@gmail.com</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Education</span>
+          <span class="value">B.Tech Computer Science Engineering — VITS</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Languages</span>
+          <span class="value">English, Telugu</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Freelance</span>
+          <span class="value">Open to offers</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Focus</span>
+          <span class="value">Web Apps &amp; Developer Tools</span>
+        </div>
+        <div class="available-badge">Available for new projects</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3 — SKILLS -->
+  <section id="skills">
+    <p class="section-label">What I Work With</p>
+    <h2>A toolkit built for <span>modern products</span></h2>
+    <div class="skills-grid">
+      <div class="skill-group">
+        <div class="skill-group-title">Frontend</div>
+        <div class="tags">
+          <span class="tag">HTML5 / CSS3</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Backend</div>
+        <div class="tags">
+          <span class="tag">Node.js</span>
+          <span class="tag">Python</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Design &amp; Tools</div>
+        <div class="tags">
+          <span class="tag">Git / GitHub</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4 — PROJECTS -->
+  <section id="projects">
+    <p class="section-label">Selected Work</p>
+    <h2>Projects I'm <span>proud of</span></h2>
+    <div class="projects-grid">
+
+      <div class="project-card">
+        <div class="project-meta">
+          <span class="project-year">2025</span>
+          <span class="project-status status-live">Live</span>
+        </div>
+        <div class="project-title">Mini Project on Neural Machine Translation System using MarianMT</div>
+        <p class="project-desc">The project demonstrates how modern Neural Machine Translation models provide fluent and context-aware translations compared to traditional rule-based and statistical methods.</p>
+        <div class="project-stack">
+          <span class="stack-chip">Python 3.x</span>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-meta">
+          <span class="project-year">2025</span>
+          <span class="project-status status-live">Live</span>
+        </div>
+        <div class="project-title">Chatbot Using CLI Commands</div>
+        <p class="project-desc">Developed a chatbot that is used to open differnt documents and files from our system.This chatbot is developed using cli commands.</p>
+        <div class="project-stack">
+          <span class="stack-chip">Python</span>
+          <span class="stack-chip">NLP</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SECTION 5 — FOOTER -->
+  <footer id="footer">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="name">Harshitha Mannem</div>
+        <div class="tagline">Aspiring Software Developer<br>Kavali,Andhra Pradesh — Open to remote</div>
+        <div class="available-badge" style="margin-top:1.4rem;">Available from July 2026</div>
+      </div>
+      <div class="footer-links-group">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="#hero">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#skills">Skills</a></li>
+        </ul>
+      </div>
+      <div class="footer-links-group">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:mannemharshitha2111@gmail.com">mannemharshitha2111@gmail.com</a></li>
+          <li><a href="#">Schedule a call</a></li>
+          <li><a href="C:\Users\HARSHITHA_VYSHNAVI\OneDrive\Desktop\Mannem Harshitha Resume.pdf">Download Resume</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2026 Harshitha Mannem. Designed &amp; built with intent.</p>
+      <div class="footer-socials">
+        <a href="https://github.com/harshithamannem21" class="social-link">GH</a>
+        <a href="https://www.linkedin.com/in/harshitha-mannem-10aa49363" class="social-link">LI</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
